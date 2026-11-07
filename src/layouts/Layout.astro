@@ -1,23 +1,49 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PromoRibbon from '../components/PromoRibbon.astro';
+import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+interface Props {
+  title?: string;
+  description?: string;
+  activeNav?: 'inicio' | 'cursos' | 'escola' | 'precos-horarios' | 'contato';
+}
+
+const {
+  title = 'Escola de Idiomas em Sousa-PB | Inglês, Espanhol, Francês, Italiano e Libras',
+  description = 'Cursos de Inglês, Espanhol, Francês, Italiano e Libras para crianças, jovens e adultos em Sousa-PB. Aulas individuais e em grupo a partir de R$ 150/mês. Fale conosco no WhatsApp.',
+  activeNav = 'inicio',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <!-- Fonts: Inter e Caveat (Cursiva) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <PromoRibbon />
+
+  <Header activeNav={activeNav} />
+
+  <main>
+    <slot />
+  </main>
+
+  <FloatingWhatsApp />
+
+  <Footer />
+
+  <script is:inline src="/js/main.js"></script>
+</body>
+</html>

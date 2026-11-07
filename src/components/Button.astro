@@ -1,0 +1,41 @@
+---
+interface Props {
+  variant?: 'primary' | 'ghost' | 'link' | 'nav-cta';
+  href?: string;
+  target?: string;
+  rel?: string;
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  variant = 'primary',
+  href,
+  target,
+  rel,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const variantClasses = {
+  primary: 'btn-primary',
+  ghost: 'btn-ghost',
+  link: 'link-arrow',
+  'nav-cta': 'btn-nav-cta',
+};
+
+const baseClass = variantClasses[variant] || 'btn-primary';
+const finalClass = className ? `${baseClass} ${className}` : baseClass;
+---
+
+{
+  href ? (
+    <a href={href} class={finalClass} target={target} rel={rel} {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <button class={finalClass} {...rest}>
+      <slot />
+    </button>
+  )
+}
